@@ -8,7 +8,6 @@ from . import exceptions
 # change it to debug/demo hosts
 config = {
     'MONEY_URL': "https://money.yandex.ru",
-    'SP_MONEY_URL': "https://sp-money.yandex.ru"
 }
 
 
@@ -227,7 +226,7 @@ class Wallet(BasePayment):
 
     @classmethod
     def build_obtain_token_url(self, client_id, redirect_uri, scope):
-        return "{}/oauth/authorize?{}".format(config['SP_MONEY_URL'],
+        return "{}/oauth/authorize?{}".format(config['MONEY_URL'],
                                               urlencode({
                                                   "client_id": client_id,
                                                   "redirect_uri": redirect_uri,
@@ -238,7 +237,7 @@ class Wallet(BasePayment):
     @classmethod
     def get_access_token(self, client_id, code, redirect_uri,
                          client_secret=None):
-        full_url = config['SP_MONEY_URL'] + "/oauth/token"
+        full_url = config['MONEY_URL'] + "/oauth/token"
         return self.process_result(requests.post(full_url, data={
             "code": code,
             "client_id": client_id,
