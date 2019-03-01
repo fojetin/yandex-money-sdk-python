@@ -12,19 +12,18 @@ config = {
 
 
 class BasePayment(object):
-    @classmethod
-    def send_request(cls, url, headers=None, body=None, access_token=None):
+    def send_request(self, url, headers=None, body=None):
         if not headers:
             headers = {}
         headers['User-Agent'] = "Yandex.Money.SDK/Python"
 
-        if access_token:
-            headers['Authorization'] = "Bearer " + access_token
+        if self.access_token:
+            headers['Authorization'] = "Bearer " + self.access_token
 
         if not body:
             body = {}
         full_url = config['MONEY_URL'] + url
-        return cls.process_result(
+        return self.process_result(
             requests.post(full_url, headers=headers, data=body)
         )
 
